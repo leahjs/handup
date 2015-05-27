@@ -3,7 +3,7 @@
 
 ## Description
 
-Add a short description of your app.
+Rails app that helps students pay for textbooks, living expenses, and other college-related budget items.
 
 ## Screenshots
 
@@ -16,7 +16,11 @@ like?
 
 ## Features
 
-Bullet point some of the key features of your app here.
+* Incorporated login via LinkedIn with the OmniAuth gem
+* Harnessed the Stripe API to allow sponsors to contribute funds to students
+* Built a flexible search feature to allow sponsors to search based on name, college, gender, and/or email
+* Added the CarrierWave Direct gem to upload images that prove a student's need (bills, syllabi, etc.) to Amazon S3
+* Implemented an ActionMailer notification email to trigger when a sponsor follows a student
 
 ## Usage
 
@@ -34,7 +38,8 @@ actually are implementing. No pie-in-the-sky-never-gonna-happen stuff.
 
 ## Author
 
-Link to your blog, twitter, etc!
+Twitter: https://twitter.com/littleredplum
+Blog: https://www.littleredpeach.com
 
 ## License
 
