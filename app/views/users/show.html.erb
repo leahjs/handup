@@ -5,41 +5,77 @@
 <% if current_user.status == 'sponsor' %>
       <% if current_user.id == @user.id %>
           <!-- <h1 class="welcome">Welcome, <%= current_user.first_name %> </h1> -->
-          <h4><%= link_to "Find Student to Sponsor", new_search_path %></h4>
+          <!-- <h4> link_to "Find Student to Sponsor", new_search_path </h4> -->
           <!-- [ FOLLOWING ] ============================================-->
           <div class="col-md-6">
-          <div class="panel widget-mini">
+          <div class="panel panel-solid-success widget-mini">
           <div class="panel-body">
           <i class="icon-user"></i>
               <span class="total text-center"><%= @sponsored_students.count%></span>
               <span class="title text-center">Following</span>
               <% @sponsored_students.each do |student| %>
-              <%= link_to student.student.first_name, student_show_path(student.student)%><br>
+              <%= link_to student.student.first_name, user_path(student.student)%><br>
               <% end %>
           </div>
           </div>
           </div>
 
+          <div class="col-md-6">
+          <div class="panel panel-solid-success widget-mini">
+          <div class="panel-body">
+            <i class="icon-user"></i>
+            <li class="divider" style="color:#27B6AF;"></li>
+            <li class="divider"style="color:#27B6AF;"></li>
+            <span class="total text-center"><%= link_to 'See how many lives you\'ve changed', total_given_path %></span>
+            <li class="divider"style="color:#27B6AF;"></li>
 
 
 
-
+          </div>
+          </div>
+          </div>
           <!-- [ EACH CHALLENGES ] ============================================-->
+          <div class="col-md-6">
+          <div class="panel panel-solid-info widget-mini">
+          <div class="panel-body">
+
+
           <h3>Challenges</h3>
           <% current_user.challenged_students.each do |row| %>
           <b><%= link_to Challenge.find(row.challenge_id).name,challenge_path(row) %> :</b>
           <%= User.find_by(:id => row.student_id).first_name %><br>
           <% end %>
           <br>
+          <span class="total text-center"></span>
+          <!-- <span class="title text-center"><a href="/challenges">Challenges</span> -->
+      </div>
+      </div>
+      </div>
           <!-- [ CHALLENGE CATEGORY ] ============================================-->
+
+            <div class="col-md-6">
+            <div class="panel panel-solid-info widget-mini">
+            <div class="panel-body">
+
+
           <h3>Challenges By Category</h3>
           <% Challenge.all.each do |challenge| %>
           <%= link_to challenge.name, '/challenges' %><br>
           <%end%>
-          <h3><%= link_to "Create A Challenge", new_challenge_path %></h3>
+          <!-- <h3> link_to "Create A Challenge", new_challenge_path </h3> -->
+
+
+        </div>
+        </div>
+        </div>
+
+
+
 
 
       <!-- [ VIEWING OTHER PROFILES ] |||||||||||||||||||||||||||||||||||||||-->
+          <div class="col-md-12 col-lg-12">
+          <div class="panel panel-default">
       <% elsif current_user.id != @user.id %>
           <h3><%= @user.first_name %> <%= @user.last_name %></h3>
             <%if !current_user.sponsored_students.pluck(:student_id).include?(@user.id)%>
@@ -49,15 +85,27 @@
             <%end%>
           <% end %>
 
-          <p><%= @user.school_name %></p>
-          <p><%= @user.major %></p>
+          <p>School: <%= @user.school_name %></p>
+          <p>Major: <%= @user.major %></p>
           <!-- [ USERS CHALLENGES ] =========================================-->
           <h3><%= @user.first_name %>'s Needs</h3>
+          <% @user.student_needs.where(state: 'pending').each do |student_need| %>
+             <h4><%= link_to student_need.need.title, select_amount_path(student_need) %></h4>
+           <p>
+              Start Date: <%= student_need.start_date.to_formatted_s(:long) %><br/>
+              End Date: <%= student_need.end_date.to_formatted_s(:long) %><br/>
+              Amount Needed: $<%= student_need.need_expense %><br/>
+              Total Donated: $<%= student_need.total_amount %><br/>
+          </p>
+          <%end%>
       <% end%>
 
-  <%= link_to 'See how many lives you\'ve changed', total_given_path %>
+
 <% end %>
 
+
+          </div>
+          </div>
 
 <!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
                   [ STUDENT PROFILE]

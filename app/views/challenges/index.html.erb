@@ -1,40 +1,4 @@
 
-<div class="col-md-12">
-                        <div class="panel panel-default">
-                        <div class="panel-heading">
-                        <h3 class="panel-title"> Challenges  </h3>
-                        <div class="actions pull-right">
-                        <i class="fa fa-expand"></i>
-                        <i class="fa fa-chevron-down"></i>
-                        <i class="fa fa-times"></i>
-                        </div>
-                        </div>
-
-                        <div class="panel-body">
-                        <table class="table">
-                        <thead>
-                           <tr>
-                           <th>Challenge</th>
-                           <th>Description</th>
-                           <th>Student</th>
-                           <th>Sponsor</th>
-                           </tr>
-                         </thead>
-                         <tbody>
-                         <tr>
-                         <td>Challenge Name</td>
-                         <td>Challenge Descrip.</td>
-                         <td>Student name</td>
-                         <td>Sponsor name</td>
-                         </tr>
-                         </tbody>
-                         </table>
-
-                         </div>
-                         </div>
-</div>
-
-
 <% Challenge.all.each do |challenge| %>
       <b><%= challenge.name %></b><br>
       <b>Sponsor: </b><%= User.find(current_user.id).first_name %><br>
@@ -44,5 +8,7 @@
         <% student_challenge.each do |st| %>
         Student: <%= User.find(st.student_id).first_name %><br>
         <% end %>
+
+
       <% end %>
 <% end %>

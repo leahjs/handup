@@ -66,7 +66,6 @@ class UsersController < ApplicationController
 
   def follow
 
-    # binding.pry
 
     @user = User.find(params[:id])
 
@@ -74,8 +73,7 @@ class UsersController < ApplicationController
     # binding.pry
     # @user = User.create_and_send_email(student_params[:email])
     StudentSponsor.create(:student_id => params[:id], :sponsor_id => current_user.id)
-    binding.pry
-    flash[:notice] = "Following New Student"
+    # flash[:notice] = "Following New Student"
     redirect_to user_path(current_user)
   end
 

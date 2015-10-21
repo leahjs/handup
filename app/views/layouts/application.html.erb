@@ -313,7 +313,7 @@
         <header id="header">
                       <!--logo start-->
                       <div class="brand">
-                      <a href="index.html" class="logo">
+                      <a href="/" class="logo">
                       <span>HAND</span>UP</a>
                       </div>
                       <!--logo end-->
@@ -328,6 +328,12 @@
                       <li class="toggle-profile hidden-xs">
                       <button type="button" class="btn btn-default" id="toggle-profile">
                       <i class="icon-user"></i>
+                      </button>
+                      </li>
+
+                      <li class="toggle-navigation toggle-left">
+                      <button class="sidebar-toggle">
+                      <a href="/signout"><i class="fa fa-sign-out"></i></a>
                       </button>
                       </li>
 <!--
@@ -353,11 +359,11 @@
                     <div class="sidebar-profile">
                         <!-- [ Profile Pic ] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <div class="avatar">
-                          <% if current_user.first_name == 'Mubiyna' %>
-                        <img class="img-circle profile-image" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/3/005/0b1/123/135ee85.jpg" alt="profile">
-                        <% else %>
-                        <img class="img-circle profile-image" src="https://scontent-lga.xx.fbcdn.net/hphotos-frc3/v/t1.0-9/64323_451871911556232_603545374_n.jpg?oh=154451703ff14330cfe264a25202a097&oe=55D93737" alt="profile">
-                        <% end %>
+                          <% if current_user.profile_photo != nil %>
+                            <img class="img-circle profile-image" src="<%= current_user.profile_photo%>" alt="profile">
+                          <% else %>
+                            <img class="img-circle profile-image" src="http://www.freelanceme.net/Images/default%20profile%20picture.png" alt="profile">
+                          <% end %>
                         <i class="on border-dark animated bounceIn"></i>
                         </div>
 
@@ -420,41 +426,79 @@
                     <!--========================================================
                      [ MENU Button ]
                     =========================================================-->
-                    <!-- <li class="nav-dropdown">
-                      <a href="#" title="UI Elements">
-                      <i class="fa  fa-fw fa-cogs"></i> Other Elements
+
+                    <% if current_user.status == 'sponsor' && current_user.sponsored_students.length >= 1 %>
+                    <li class="nav-dropdown">
+                      <a href="/searches/new" title="UI Elements">
+                      <i class="fa  fa-fw fa-cogs"></i> Search For Student
                       </a>
                     </li> --><!-- end nav-drop down-->
+                    <li class="nav-dropdown">
+                      <a href="/challenges/new" title="UI Elements">
+                      <i class="fa  fa-fw fa-cogs"></i> Create A Challenge
+                      </a>
+                    </li> --><!-- end nav-drop down-->
+                    <% end %>
+
+                    <% if current_user.status == 'student'%>
+                    <li class="nav-dropdown">
+                      <a href="/student_needs/new" title="UI Elements">
+                      <i class="fa  fa-fw fa-cogs"></i> Create Need
+                      </a>
+                    </li> --><!-- end nav-drop down-->
+                    <% end %>
+
+
                     <!--========================================================
                      [ FIRST DROP DOWN MENU ]
                     =========================================================-->
+                    <% if current_user.status == 'student'%>
                     <li class="nav-dropdown">
                       <a href="#" title="UI Elements">
-                      <i class="fa  fa-fw fa-cogs"></i> Challenges
+                      <i class="fa  fa-fw fa-cogs"></i> Followers
                       </a>
                           <ul class="nav-sub">
-                          <li>
-                          <a href="ui-buttons.html" title="Buttons">Create A Need</a>
-                          </li>
-                          <li>
-                          <a href="ui-sliders-progress.html" title="Sliders &amp; Progress">Sliders &amp; Progress</a>
-                          </li>
-                          <li>
-                          <a href="ui-modals-popus.html" title="Modals &amp; Popups">Modals &amp; Popups</a>
-                          </li>
-                          <li>
-                          <a href="ui-tabs-accordions.html" title="Tabs &amp; Accordions">Tabs &amp; Accordions</a>
-                          </li>
-                          </ul>
-                    </li> <!-- end nav-drop down-->
+
+
+                          <% current_user.student_sponsors.each do |row|%>
+                          <a href="ui-buttons.html" title="Buttons"><%= User.find(row.sponsor_id).first_name %></a>
+                          <% end %>
+
+                          </ul> -->
+                    </li>  end nav-drop down-->
+                    <%end%>
+
+                    <% if current_user.status == 'sponsor'%>
+                    <li class="nav-dropdown">
+                      <a href="#" title="UI Elements">
+                      <i class="fa  fa-fw fa-cogs"></i> Followers
+                      </a>
+                          <ul class="nav-sub">
+
+
+                          <% current_user.sponsored_students.each do |student| %>
+                          <a href="ui-buttons.html" title="Buttons"><%= link_to student.student.first_name, student_show_path(student.student)%></a>
+                          <% end %>
+
+                          </ul> -->
+                    </li>  end nav-drop down-->
+                    <%end%>
+
+
+
+
+
+
                     <!--========================================================
                      [ SECOND DROP DOWN MENU ]
                     =========================================================-->
-                    <li class="nav-dropdown">
+                    <!-- <li class="nav-dropdown">
                       <a href="#" title="UI Elements">
                       <i class="fa  fa-fw fa-cogs"></i>Needs
                       </a>
                           <ul class="nav-sub">
+
+
                           <li>
                           <a href="ui-buttons.html" title="Buttons">All Needs</a>
                           </li>
@@ -467,9 +511,9 @@
                           <li>
                           <a href="ui-tabs-accordions.html" title="Tabs &amp; Accordions">Tabs &amp; Accordions</a>
                           </li>
-                          </ul>
-                    </li> <!-- end nav-drop down-->
-                    </ul><!-- end nav nav-pills nav-stacked"-->
+                          </ul> -->
+                    <!-- </li>  end nav-drop down--> -->
+                    <!-- </ul> end nav nav-pills nav-stacked"--> -->
                     </nav>
         </aside>
 
